@@ -5,7 +5,7 @@ const firestore = firebase.firestore();
 const users = firestore.collection('users');
 
 
-/* add new user */
+/* Add new user. */
 const addUser = async (name, uid, covid) => {
   try {
     const data = {
@@ -18,9 +18,9 @@ const addUser = async (name, uid, covid) => {
   catch(error){
     console.log(error);
   }
-}
+};
 
-/* update Covid */
+/* Update Covid. */
 const updateCovid = async (name, uid, covid) => {
   const data = {
     name: name,
@@ -28,7 +28,16 @@ const updateCovid = async (name, uid, covid) => {
     covid: covid,
   };
   const updatedUser = await users.doc(data.uid.toString()).update(data);
-}
+};
+
+/* Remove fields from data table. Automatic after X time. */
+const cleanDataTable;
+
+/* Update data table */
+const updateDataTable;
+
+/* Update UID close contacts. */
+const updateCloseContacts;
 
 /* remove fields from data table */
 
@@ -36,11 +45,11 @@ const updateCovid = async (name, uid, covid) => {
 
 /* remove fields from data table */
 
-/* remove fields from data table */
 
-/* remove fields from data table */
 
-/* remove fields from data table */
+
+
+
 
 module.exports = {
     addUser, updateCovid
