@@ -30,6 +30,18 @@ const updateCovid = async (name, uid, covid) => {
   const updatedUser = await users.doc(data.uid.toString()).update(data);
 }
 
+/* remove fields from data table */
+
+/* remove fields from data table */
+
+/* remove fields from data table */
+
+/* remove fields from data table */
+
+/* remove fields from data table */
+
+/* remove fields from data table */
+
 module.exports = {
     addUser, updateCovid
 }
