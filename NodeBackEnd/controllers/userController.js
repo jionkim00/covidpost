@@ -4,6 +4,7 @@ const firebase = require('../firebase_db');
 const firestore = firebase.firestore();
 const users = firestore.collection('users');
 const tracingpingData = firestore.collection('tracingpingData')
+const twilioMessaging = require('../twilioMessaging/twillioFunctions')
 
 
 /* Add new user. */
@@ -35,7 +36,7 @@ const updateCovidStatus = async (uid, covid) => {
 
 /* Add new user. */
 const addLangLong = async (latitude, longitude, uid) => {
-    
+
     try {
         //find way to add latitude and longitude
       const addedUser = await users.doc(data.uid.toString()).set(data);

@@ -7,6 +7,7 @@ const config = require('./config');
 
 const { addUser, updateCovid } = require('./controllers/userController');
 const { calculateGeolocationData } = require('./geolocation/geolocationConversion')
+const { notifyCovid } = require('./twilioMessaging/twillioFunctions')
 
 const app = express();
 app.use(express.json());
@@ -57,7 +58,11 @@ app.post('./updateCovidStatus', function(req, res) {
 
 });
 
+app.get('/twilio', async function(req, res) {
+    const val = await notifyCovid();
+    res.send(val);
+})
+
 //data 
-
-
+ 
 server.listen(process.env.PORT || 5000, () => console.log(`Server has started.`));
