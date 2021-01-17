@@ -92,18 +92,18 @@ app.put('/updateDataTable', async function(req, res) {
   }
 })
 
-app.get('/surroundings', function(req, res) {
-    try {
-    let uid = req.query.uid;
-    let lat = req.query.lat;
-    let long = req.query.long;
-    checkSimilarSurroudings(uid, lat, long);
-    res.sendStatus(200).send('Successfully recorded');
-    }
-    catch(err) {
-        res.sendStatus(500).send('Server Error');
-    }
-})
+// app.get('/surroundings', function(req, res) {
+//     try {
+//     let uid = req.query.uid;
+//     let lat = req.query.lat;
+//     let long = req.query.long;
+//     checkSimilarSurroudings(uid, lat, long);
+//     res.sendStatus(200).send('Successfully recorded');
+//     }
+//     catch(err) {
+//         res.sendStatus(500).send('Server Error');
+//     }
+// })
 
  
 app.get('/twilio', async function(req, res) {
