@@ -22,7 +22,6 @@ const server = http.createServer(app);
 app.use(cors());
 
 app.get('/', async function(req, res) {
-  getGeoData();
   res.send("it wrked")
 })
 
@@ -86,7 +85,7 @@ app.put('/updateDataTable', function(req, res) {
     let lat = req.query.lat;
     let long = req.query.long;
     updateDataTable(uid, lat, long);
-    res.sendStatus(200).send('Successfully recorded');
+    // res.sendStatus(200).send('Successfully recorded');
   }
   catch(err) {
     res.sendStatus(500).send('Server Error');
@@ -106,24 +105,10 @@ app.get('/surroundings', function(req, res) {
     }
 })
 
-app.get('/phone', function(req, res) {
-    try {
-    let uid = req.query.uid;
-    let lat = req.query.lat;
-    let long = req.query.long;
-    checkSimilarSurroudings(uid, lat, long);
-    res.sendStatus(200).send('Successfully recorded');
-    }
-    catch(err) {
-        res.sendStatus(500).send('Server Error');
-    }
-})
-//data 
+ 
 app.get('/twilio', async function(req, res) {
     const val = await notifyCovid();
     res.send(val);
 })
 
-//data 
- 
 server.listen(process.env.PORT || 5000, () => console.log(`Server has started.`));

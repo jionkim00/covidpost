@@ -31,6 +31,9 @@ const addUser = async (name, covid, phone) => {
 /* Update Covid. DONEE*/
 const updateCovidStatus = async (uid, covid) => {
   const updatedUser = await users.doc(uid).update({covid: covid});
+  if(covid){
+    //query for all the people in the contact list and message them
+  }
 };
 
 /* Remove fields from data table. Automatic after X time. */
@@ -47,7 +50,9 @@ const updateDataTable = async (uid, lat, long) => {
       longitude: parseFloat(long),
       date: new firebase.firestore.FieldValue.serverTimestamp()
     };
-    const temp = await dataTable.doc(uid.toString()).set(data);
+    const temp = await dataTable.add(data);
+    checkSimilarSurroudings(uid, lat, long, '1');
+
   }
   catch(err){
     console.log(err)
@@ -73,11 +78,18 @@ const checkSimilarSurroudings = async (uid, lat, long, time) => {
   let geopointsConfig = calculateGeolocationData(lat, long)
   try{
     const snapshot = await dataTable.get();
-    const stuff = snapshot.docs.map(doc => doc.data()).filter(function(each) {
+    const people = snapshot.docs.map(doc => doc.data()).filter(function(each) {
       return each.latitude >= geopointsConfig.minLatitude && each.latitude <= geopointsConfig.maxLatitude
           && each.longitude >= geopointsConfig.minLongitude && each.longitude <= geopointsConfig.maxLongitude
     });
-    // console.log(stuff);                         
+    var filtered = people.filter(function(item) {
+      return item.uid !== uid;})    
+    let reducedPeople = new Set()
+    filtered.forEach(element => reducedPeople.add(element.uid))  
+    console.log(reducedPeople)
+    for(let user of reducedPeople){
+      addCloseContacts(uid, user)
+    }
   }
   catch(err){
     console.log(err)
@@ -93,20 +105,9 @@ const addCloseContacts = async (uid1, uid2) => {
     const person2 = await users.doc(uid2).get();
     const person2Data = person2.data();
 
-    // how to get times
-    const data1 = {
-      uid: person1Data.uid,
-      covid: person1Data.covid,
-    };
-    
-    const data2 = {
-      uid: person2Data.uid,
-      covid: person2Data.covid,
-    };
-
     // const person1 = await users.doc(uid1).get();
-    person1.data().contact.push(data2);
-    person2.data().contact.push(data1);
+    person1.data().contact.push(uid2);
+    person2.data().contact.push(uid1);
 
     const contact1 = await users.doc(uid1).update({contact: person1.data().contact});
     const contact2 = await users.doc(uid1).update({contact: person2.data().contact});
