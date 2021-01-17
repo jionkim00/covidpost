@@ -65,12 +65,12 @@ app.post('/updateCovidStatus', function(req, res) {
 });
 
 // some HTTP issues
-app.get('/addContacts', function(req, res) {
+app.post('/addContacts', function(req, res) {
   try {
     console.log("index")
     let uid1 = req.query.uid1;
     let uid2 = req.query.uid2;
-    // addCloseContacts(uid1, uid2);
+    addCloseContacts(uid1, uid2);
     res.sendStatus(200).send('Successfully received');
   }
   catch(err) {
@@ -79,13 +79,13 @@ app.get('/addContacts', function(req, res) {
 })
 
 // same HTTP issue
-app.put('/updateDataTable', function(req, res) {
+app.put('/updateDataTable', async function(req, res) {
   try {
     let uid = req.query.uid;
     let lat = req.query.lat;
     let long = req.query.long;
-    updateDataTable(uid, lat, long);
-    // res.sendStatus(200).send('Successfully recorded');
+    await updateDataTable(uid, lat, long);
+    res.send("okay");
   }
   catch(err) {
     res.sendStatus(500).send('Server Error');

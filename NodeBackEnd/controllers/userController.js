@@ -99,19 +99,17 @@ const checkSimilarSurroudings = async (uid, lat, long, time) => {
 /* Adds UID2 and UID1 close contacts. */
 const addCloseContacts = async (uid1, uid2) => {
   try {
-    const person1 = await users.doc(uid1).get();
+    const person1 = await users.doc(uid1.toString()).get();
     const person1Data = person1.data();
 
-    const person2 = await users.doc(uid2).get();
+    const person2 = await users.doc(uid2.toString()).get();
     const person2Data = person2.data();
 
-    // const person1 = await users.doc(uid1).get();
-    person1.data().contact.push(uid2);
-    person2.data().contact.push(uid1);
+    person1Data.contact.push(uid2);
+    person2Data.contact.push(uid1);
 
-    const contact1 = await users.doc(uid1).update({contact: person1.data().contact});
-    const contact2 = await users.doc(uid1).update({contact: person2.data().contact});
-
+    const contact1 = await users.doc(uid1).update({contact: person1Data.contact});
+    const contact2 = await users.doc(uid2).update({contact: person2Data.contact});
   }
   catch(error) {
     console.log(error);
