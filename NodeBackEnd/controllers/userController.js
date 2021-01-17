@@ -35,6 +35,7 @@ const updateCovidStatus = async (uid, covid) => {
 
 /* Add new user. */
 const addLangLong = async (latitude, longitude, uid) => {
+    
     try {
         //find way to add latitude and longitude
       const addedUser = await users.doc(data.uid.toString()).set(data);

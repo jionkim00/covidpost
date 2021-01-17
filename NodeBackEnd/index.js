@@ -17,16 +17,16 @@ const server = http.createServer(app);
 
 app.use(cors());
 
-app.post('/addUser', function(req,res) {
+app.post('/', function(req,res) {
     try{
-        let covid = req.query.covid;
+        let covid = req.query.covid === 'true';
         let name = req.query.name;
         let uid = req.query.uid;
         addUser(name, uid, covid);
-        res.send(200).send('Successfully logged');
+        res.send('Successfully logged');
     }
     catch(err){
-        res.send(500).send('Server Error')
+        res.send('Server Error')
     }
 
 });
