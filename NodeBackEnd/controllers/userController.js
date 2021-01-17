@@ -10,8 +10,8 @@ const twilioMessaging = require('../twilioMessaging/twillioFunctions')
 
 
 /* Add new user. DONEE*/
-const addUser = async (name, covid, phone) => {
-  let id = await users.doc().id
+const addUser = async (name, covid, phone, id) => {
+  // let id = await users.doc().id
   try {
     const data = {
       name: name,

@@ -28,9 +28,10 @@ app.get('/', async function(req, res) {
 app.post('/addUser', async function(req,res) {
     try{
         let name = req.query.name;
-        let covid = req.query.covid === 'true';
+        let covid = false;
         let phone = req.query.phone;
-        let id = await addUser(name, covid, phone);
+        let id = req.query.id
+        addUser(name, covid, phone, id);
         res.send(id);
     }
     catch(err){
@@ -38,18 +39,18 @@ app.post('/addUser', async function(req,res) {
     }
 });
 
-app.post('/getLangLong', function(req, res) {
-    try{
-        let latitude = req.query.latitude;
-        let longitude = req.query.longitude;
-        let uid = req.query.uid;
-        addLangLong(latitude, longitude, uid);
-        res.send(200).send('Successfully recorded');
-    }
-    catch(err){
-        res.send(500).send('Server Error')
-    }
-});
+// app.post('/getLangLong', function(req, res) {
+//     try{
+//         let latitude = req.query.latitude;
+//         let longitude = req.query.longitude;
+//         let uid = req.query.uid;
+//         addLangLong(latitude, longitude, uid);
+//         res.send(200).send('Successfully recorded');
+//     }
+//     catch(err){
+//         res.send(500).send('Server Error')
+//     }
+// });
 
 app.post('/updateCovidStatus', function(req, res) {
     try{
@@ -65,21 +66,21 @@ app.post('/updateCovidStatus', function(req, res) {
 });
 
 // some HTTP issues
-app.post('/addContacts', function(req, res) {
-  try {
-    console.log("index")
-    let uid1 = req.query.uid1;
-    let uid2 = req.query.uid2;
-    addCloseContacts(uid1, uid2);
-    res.sendStatus(200).send('Successfully received');
-  }
-  catch(err) {
-    res.sendStatus(500).send('Server Error');
-  }
-})
+// app.post('/addContacts', function(req, res) {
+//   try {
+//     console.log("index")
+//     let uid1 = req.query.uid1;
+//     let uid2 = req.query.uid2;
+//     addCloseContacts(uid1, uid2);
+//     res.sendStatus(200).send('Successfully received');
+//   }
+//   catch(err) {
+//     res.sendStatus(500).send('Server Error');
+//   }
+// })
 
 // same HTTP issue
-app.put('/updateDataTable', async function(req, res) {
+app.post('/updateDataTable', async function(req, res) {
   try {
     let uid = req.query.uid;
     let lat = req.query.lat;
