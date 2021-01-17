@@ -31,13 +31,13 @@ const updateCovid = async (name, uid, covid) => {
 };
 
 /* Remove fields from data table. Automatic after X time. */
-const cleanDataTable;
+// const cleanDataTable;
 
-/* Update data table */
-const updateDataTable;
+// /* Update data table */
+// const updateDataTable;
 
-/* Update UID close contacts. */
-const updateCloseContacts;
+// /* Update UID close contacts. */
+// const updateCloseContacts;
 
 /* remove fields from data table */
 
