@@ -26,19 +26,19 @@ const calculateGeolocationData = (latitude, longitude) => {
         const a = Math.atan2(Math.sin(brng)*Math.sin(dist)*Math.cos(lat1), Math.cos(dist)-Math.sin(lat1)*Math.sin(lat2));
         let lon2 = lon1 + a;
         lon2 = (lon2+ 3*Math.PI) % (2*Math.PI) - Math.PI;
-        console.log("Latitude = "+toDegrees(lat2)+"\nLongitude = "+toDegrees(lon2));
+        // console.log("Latitude = "+toDegrees(lat2)+"\nLongitude = "+toDegrees(lon2));
         degree+=90;
         maxLatitude = Math.max(maxLatitude, toDegrees(lat2));
         maxLongitude = Math.max(maxLongitude, toDegrees(lon2));
         minLatitude = Math.min(minLatitude, toDegrees(lat2));
         minLongitude = Math.min(minLongitude, toDegrees(lon2));
     }
-    console.log(minLatitude, minLongitude, maxLongitude, maxLatitude);
+    // console.log(minLatitude, minLongitude, maxLongitude, maxLatitude);
     return {
-        "minLatitude": minLatitude,
-        "maxLatitude": maxLatitude,
-        "minLongitude": minLongitude,
-        "maxLongitude": maxLongitude
+        minLatitude: minLatitude,
+        maxLatitude: maxLatitude,
+        minLongitude: minLongitude,
+        maxLongitude: maxLongitude
     }
 }
 

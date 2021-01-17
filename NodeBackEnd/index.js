@@ -5,7 +5,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const config = require('./config');
 
-const { addUser, updateCovid, addCloseContacts, updateDataTable } = require('./controllers/userController');
+const { addUser, updateCovidStatus, 
+        addCloseContacts, updateDataTable, 
+        getGeoData, checkSimilarSurroudings,
+        getPhoneNumbersforCovid, } = require('./controllers/userController');
 const { calculateGeolocationData } = require('./geolocation/geolocationConversion')
 
 const app = express();
@@ -17,13 +20,18 @@ const server = http.createServer(app);
 
 app.use(cors());
 
-app.post('/addUser', function(req,res) {
+app.get('/', async function(req, res) {
+  getGeoData();
+  res.send("it wrked")
+})
+
+app.post('/addUser', async function(req,res) {
     try{
-        let covid = req.query.covid === 'true';
         let name = req.query.name;
-        let uid = req.query.uid;
-        addUser(name, uid, covid);
-        res.send('Successfully logged');
+        let covid = req.query.covid === 'true';
+        let phone = req.query.phone;
+        let id = await addUser(name, covid, phone);
+        res.send(id);
     }
     catch(err){
         res.send('Server Error')
@@ -43,16 +51,16 @@ app.post('/getLangLong', function(req, res) {
     }
 });
 
-app.put('/updateCovidStatus', function(req, res) {
+app.post('/updateCovidStatus', function(req, res) {
     try{
-        let name = req.query.name;
         let uid = req.query.uid;
         let covid = req.query.covid;
-        updateCovidStatus(name, uid, covid);
-        res.send(200).send('Successfully recorded');
+        updateCovidStatus(uid, covid);
+        res.send("Successfully recorded");
     }
     catch(err){
-        res.send(500).send('Server Error');
+        console.log(err);
+        res.send("Server Error");
     }
 });
 
@@ -73,12 +81,10 @@ app.get('/addContacts', function(req, res) {
 // same HTTP issue
 app.put('/updateDataTable', function(req, res) {
   try {
-    let name = req.query.name;
     let uid = req.query.uid;
     let lat = req.query.lat;
     let long = req.query.long;
-    let time = req.query.time;
-    updateDataTable(name, uid, lat, long, time);
+    updateDataTable(uid, lat, long);
     res.sendStatus(200).send('Successfully recorded');
   }
   catch(err) {
@@ -86,9 +92,31 @@ app.put('/updateDataTable', function(req, res) {
   }
 })
 
+app.get('/surroundings', function(req, res) {
+    try {
+    let uid = req.query.uid;
+    let lat = req.query.lat;
+    let long = req.query.long;
+    checkSimilarSurroudings(uid, lat, long);
+    res.sendStatus(200).send('Successfully recorded');
+    }
+    catch(err) {
+        res.sendStatus(500).send('Server Error');
+    }
+})
 
-app.post('/')
-
+app.get('/phone', function(req, res) {
+    try {
+    let uid = req.query.uid;
+    let lat = req.query.lat;
+    let long = req.query.long;
+    checkSimilarSurroudings(uid, lat, long);
+    res.sendStatus(200).send('Successfully recorded');
+    }
+    catch(err) {
+        res.sendStatus(500).send('Server Error');
+    }
+})
 //data 
 
 server.listen(process.env.PORT || 5000, () => console.log(`Server has started.`));
