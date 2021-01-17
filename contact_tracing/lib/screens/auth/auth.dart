@@ -1,3 +1,5 @@
+import 'package:contact_tracing/screens/auth/register.dart';
+import 'package:contact_tracing/screens/auth/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class Auth extends StatefulWidget{
@@ -5,10 +7,15 @@ class Auth extends StatefulWidget{
 }
 
 class AuthState extends State<Auth>{
+  bool showSignIn = true;
+  void toggleView() 
+  {
+    setState(() => showSignIn = !showSignIn);
+  }
+  
   Widget build(BuildContext context)
   {
-    return Container(
-      child: Text("authenticate"),
-    );
+    
+    return showSignIn ? signIn(showSignIn: toggleView) : register(showSignIn: toggleView); 
   }
 }
