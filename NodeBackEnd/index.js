@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 
 const { addUser } = require('./controllers/userController');
+const { calculateGeolocationData } = require('./geolocation/geolocationConversion')
 
 const app = express();
 app.use(express.json());
