@@ -2,8 +2,9 @@
 
 const firebase = require('../firebase_db');
 const firestore = firebase.firestore();
-const users = firestore.collection('users');
 
+const userTable = firestore.collection('users');
+const dataTable = firestore.collection('data');
 
 /* Add new user. */
 const addUser = async (name, uid, covid) => {
@@ -13,7 +14,7 @@ const addUser = async (name, uid, covid) => {
       uid: uid, 
       covid: covid,
     };
-    const addedUser = await users.doc(data.uid.toString()).set(data);
+    const addedUser = await userTable.doc(data.uid.toString()).set(data);
   }
   catch(error){
     console.log(error);
@@ -27,30 +28,32 @@ const updateCovid = async (name, uid, covid) => {
     uid: uid, 
     covid: covid,
   };
-  const updatedUser = await users.doc(data.uid.toString()).update(data);
+  const updatedUser = await userTable.doc(data.uid.toString()).update(data);
 };
 
 /* Remove fields from data table. Automatic after X time. */
 const cleanDataTable;
 
-/* Update data table */
-const updateDataTable;
+/* Update data table. */
+const updateDataTable = async (name, uid, long, lat, time) => {
+  const data = {
+    name: name,
+    uid: uid,
+    long: long, 
+    lat: lat,
+    time: time,
+  };
+  const temp = await dataTable.doc(data.uid.toString()).update(data);
+};
 
-/* Update UID close contacts. */
+/* Update close contacts. */
 const updateCloseContacts;
 
-/* remove fields from data table */
-
-/* remove fields from data table */
-
-/* remove fields from data table */
-
-
-
-
-
-
+/* Checks close contact if someone with covid. */
+const checkCloseContacts = async (uid) => {
+  let contacts = await userTable.doc(uid).get();
+};
 
 module.exports = {
-    addUser, updateCovid
+    addUser, updateCovid, updateDataTable
 }
