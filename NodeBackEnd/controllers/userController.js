@@ -3,6 +3,7 @@
 const firebase = require('../firebase_db');
 const firestore = firebase.firestore();
 const users = firestore.collection('users');
+const tracingpingData = firestore.collection('tracingpingData')
 
 
 /* Add new user. */
@@ -21,14 +22,27 @@ const addUser = async (name, uid, covid) => {
 };
 
 /* Update Covid. */
-const updateCovid = async (name, uid, covid) => {
+const updateCovidStatus = async (uid, covid) => {
   const data = {
     name: name,
     uid: uid, 
     covid: covid,
   };
+  //find the entry where the uid and set the covid value to that
+  const query = users.where("uid", "==", uid.toString())
   const updatedUser = await users.doc(data.uid.toString()).update(data);
 };
+
+/* Add new user. */
+const addLangLong = async (latitude, longitude, uid) => {
+    try {
+        //find way to add latitude and longitude
+      const addedUser = await users.doc(data.uid.toString()).set(data);
+    }
+    catch(error){
+      console.log(error);
+    }
+  };
 
 /* Remove fields from data table. Automatic after X time. */
 // const cleanDataTable;
@@ -52,5 +66,5 @@ const updateCovid = async (name, uid, covid) => {
 
 
 module.exports = {
-    addUser, updateCovid
+    addUser, updateCovidStatus
 }

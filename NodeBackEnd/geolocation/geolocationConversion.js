@@ -40,7 +40,6 @@ const calculateGeolocationData = (latitude, longitude) => {
         "minLongitude": minLongitude,
         "maxLongitude": maxLongitude
     }
-
 }
 
 module.exports = {
