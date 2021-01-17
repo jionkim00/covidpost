@@ -62,7 +62,7 @@ app.get('/addContacts', function(req, res) {
     console.log("index")
     let uid1 = req.query.uid1;
     let uid2 = req.query.uid2;
-    addCloseContacts(uid1, uid2);
+    // addCloseContacts(uid1, uid2);
     res.sendStatus(200).send('Successfully received');
   }
   catch(err) {

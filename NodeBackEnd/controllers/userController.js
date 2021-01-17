@@ -28,30 +28,16 @@ const updateCovidStatus = async (name, uid, covid) => {
   const updatedUser = await users.doc(data.uid).update({covid: covid});
 };
 
-/* Add lat/long. */
-// whats the point of this
-const addLangLong = async (latitude, longitude, uid) => {
-    try {
-        //find way to add latitude and longitude
-      const addedUser = await users.doc(uid).set(data);
-    }
-    catch(error){
-      console.log(error);
-    }
-  };
-
 /* Remove fields from data table. Automatic after X time. */
 const cleanDataTable = async () => {
   // filter by date and remove each one
 };
 
 /* Update data table. */
-// pass in time or current time?
-const updateDataTable = async (name, uid, lat, long, time) => {
+const updateDataTable = async (uid, lat, long) => {
   const data = {
-    name: name,
     uid: uid,
-    geopoints: new GeoPoint(lat, long), 
+    geopoints: new GeoPoint(lat, long),
   };
   const temp = await dataTable.doc(uid.toString()).set(data);
 };
