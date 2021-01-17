@@ -94,7 +94,7 @@ const checkSimilarSurroudings = async (uid, lat, long, time) => {
     filtered.forEach(element => reducedPeople.add(element.uid))  
     console.log("THIS IS REDUCED", reducedPeople)
     for(let user of reducedPeople){
-      addCloseContacts(uid, user)
+      await addCloseContacts(uid, user)
     }
   }
   catch(err){
