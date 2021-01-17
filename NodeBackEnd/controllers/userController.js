@@ -6,6 +6,7 @@ const users = firestore1.collection('users');
 const dataTable = firestore1.collection('data');
 const tracingpingData = firestore1.collection('tracingpingData')
 const { calculateGeolocationData } = require('../geolocation/geolocationConversion')
+const twilioMessaging = require('../twilioMessaging/twillioFunctions')
 
 
 /* Add new user. DONEE*/
