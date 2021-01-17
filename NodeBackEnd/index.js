@@ -43,20 +43,21 @@ app.post('/getLangLong', function(req, res) {
     }
 });
 
-app.put('./updateCovidStatus', function(req, res) {
+app.put('/updateCovidStatus', function(req, res) {
     try{
+        let name = req. query.name;
         let uid = req.query.uid;
         let covid = req.query.covid;
-        updateCovidStatus(uid, covid);
+        updateCovidStatus(name, uid, covid);
         res.send(200).send('Successfully recorded');
     }
     catch(err){
         res.send(500).send('Server Error')
     }
-
 });
 
-//data 
+app.post('/')
 
+//data 
 
 server.listen(process.env.PORT || 5000, () => console.log(`Server has started.`));
