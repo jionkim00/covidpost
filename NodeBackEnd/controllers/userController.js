@@ -1,7 +1,5 @@
 'use strict';
 
-const firebaseAdmin = require('firebase-admin');
-
 const firebase = require('../firebase_db');
 const firestore = firebase.firestore();
 const users = firestore.collection('users');
@@ -53,7 +51,7 @@ const updateDataTable = async (name, uid, lat, long, time) => {
   const data = {
     name: name,
     uid: uid,
-    geopoints: new firebaseAdmin.firestore.GeoPoint(lat, long), 
+    geopoints: new GeoPoint(lat, long), 
   };
   const temp = await dataTable.doc(uid.toString()).set(data);
 };
