@@ -17,7 +17,7 @@ const server = http.createServer(app);
 
 app.use(cors());
 
-app.post('/', function(req,res) {
+app.post('/addUser', function(req,res) {
     try{
         let covid = req.query.covid === 'true';
         let name = req.query.name;
@@ -28,7 +28,6 @@ app.post('/', function(req,res) {
     catch(err){
         res.send('Server Error')
     }
-
 });
 
 app.post('/getLangLong', function(req, res) {
@@ -44,7 +43,7 @@ app.post('/getLangLong', function(req, res) {
     }
 });
 
-app.post('./updateCovidStatus', function(req, res) {
+app.put('./updateCovidStatus', function(req, res) {
     try{
         let uid = req.query.uid;
         let covid = req.query.covid;
