@@ -1,16 +1,16 @@
+import 'package:contact_tracing/screens/wrapper.dart';
 import 'package:flutter/material.dart';
+
 void main() {
-  runApp(ContactTracing());
+  runApp(MyApp());
 }
 
-class ContactTracing extends StatelessWidget{
-    Widget build(BuildContext context)
-    {
-      return MaterialApp(home: 
-      Scaffold(
-        appBar: AppBar(title: Text("Contact Tracing"),), 
-        body: Text("We in baby"),)
-        ,);
-    }
-
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Wrapper(),
+    );
+  }
 }
