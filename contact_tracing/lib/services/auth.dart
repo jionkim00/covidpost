@@ -17,25 +17,7 @@ class AuthService{
     return _auth.onAuthStateChanged.map(_convertfirebaseUser);
   }
 
-
-
-  //sign in anon, just for testing purposes
-  Future signInAnon() async
-  {
-    try {
-      AuthResult anon = await _auth.signInAnonymously();
-
-      FirebaseUser currUser = anon.user;
-      return _convertfirebaseUser(currUser);
-
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-    
-  }
-
-  //sign in with phone number
+  //verify phone number
   //TODO
 
   //register with email and pasword

@@ -1,5 +1,7 @@
+import 'package:contact_tracing/api_requests/api_calls.dart';
 import 'package:contact_tracing/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class register extends StatefulWidget {
   final Function showSignIn;
@@ -12,26 +14,29 @@ class _registerState extends State<register> {
 
   final AuthService _auth = AuthService();
 
+  final API api = API();
+
   String email = "";
   String password = "";
   String phoneNumber = "";
+  String firstName = "";
+  String lastName = "";
   String error = "";
 
   void registerWithEmail() async
   {
     dynamic result = await _auth.registerEmail(email, password);
+    
     if (result == null)
     {
       setState(() => error = "error signing up");
     }
+    else
+    {
+      api.addUser(result.uid, firstName, lastName, phoneNumber); 
+    }
     
   }
-
-  void registerWithPhoneNumer() async
-  {
-    
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +52,6 @@ class _registerState extends State<register> {
         child: Form(
           child: Column(
             children: <Widget>[
-              SizedBox(height: 20.0,),
               TextFormField(
                 decoration: const InputDecoration(
                   icon: null,
@@ -58,7 +62,6 @@ class _registerState extends State<register> {
                   setState(() => email = val);
                 },
               ),
-              SizedBox(height: 20.0,),
               TextFormField(
                 decoration: const InputDecoration(
                   icon: null,
@@ -70,7 +73,6 @@ class _registerState extends State<register> {
                   setState(() => password = val);
                 },
               ),
-              SizedBox(height: 20.0,),
               TextFormField(
                 decoration: const InputDecoration(
                   icon: null,
@@ -81,7 +83,29 @@ class _registerState extends State<register> {
                   setState(() => phoneNumber = val);
                 },
               ),
-              SizedBox(height: 20.0,),
+
+              TextFormField(
+                decoration: const InputDecoration(
+                  icon: null,
+                  hintText: "",
+                  labelText: "first name",
+                ),
+                onChanged: (val) {
+                  setState(() => firstName = val);
+                },
+              ),
+
+              TextFormField(
+                decoration: const InputDecoration(
+                  icon: null,
+                  hintText: "",
+                  labelText: "last name",
+                ),
+                onChanged: (val) {
+                  setState(() => lastName = val);
+                },
+              ),
+
               RaisedButton(
                 color: Colors.blue[400],
                 child: Text(
@@ -90,18 +114,6 @@ class _registerState extends State<register> {
                   ),
                 onPressed: () async {
                   registerWithEmail();
-                },
-              ),
-
-              RaisedButton(
-                color: Colors.blue[400],
-                child: Text(
-                  "Register with phone number",
-                  style: TextStyle(color: Colors.white),
-                  ),
-                onPressed: () async {
-                  print(email);
-                  print(password);
                 },
               ),
               RaisedButton(

@@ -15,14 +15,8 @@ class _signInState extends State<signIn> {
   String email = "";
   String password = "";
   String phoneNumber = "";
-  void anonPressed() async
-  {
-    dynamic userResult = await _auth.signInAnon();
-    if (userResult == null)
-    {
-      print("error signing in");
-    }
-  }
+  String firstName = "";
+  String lastName = "";
 
   void signInEmail() async
   {
@@ -74,18 +68,6 @@ class _signInState extends State<signIn> {
               ),
 
               SizedBox(height: 20.0,),
-              TextFormField(
-                decoration: const InputDecoration(
-                  icon: null,
-                  hintText: "",
-                  labelText: "phone number",
-                ),
-                onChanged: (val) {
-                  setState(() => phoneNumber = val);
-                },
-              ),
-
-              SizedBox(height: 20.0,),
               RaisedButton(
                 color: Colors.blue[400],
                 child: Text(
@@ -94,18 +76,6 @@ class _signInState extends State<signIn> {
                   ),
                 onPressed: () async {
                   signInEmail();
-                },
-              ),
-              
-              RaisedButton( 
-                color: Colors.blue[400],
-                child: Text(
-                  "Sign in with phone number",
-                  style: TextStyle(color: Colors.white),
-                  ),
-                onPressed: () async {
-                  print(email);
-                  print(password);
                 },
               ),
 

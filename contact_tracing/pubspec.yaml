@@ -38,6 +38,12 @@ dependencies:
   
   # Add the dependencies for a Provider
   provider: ^3.1.0
+  
+  # http requests dependencies
+  http: ^0.12.2
+  
+  # gps data dependencies
+  geolocator: ^6.1.13
 dev_dependencies:
   flutter_test:
     sdk: flutter
