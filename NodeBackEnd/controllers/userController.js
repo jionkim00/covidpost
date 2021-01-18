@@ -28,6 +28,12 @@ const addUser = async (name, covid, phone, id) => {
   return id;
 };
 
+/* Get Covid status based on UID */
+const getCovidStatus = async(uid) => {
+  const info = await users.doc(uid.toString()).get();
+  return info.data().covid;
+}
+
 /* Update Covid. DONEE*/
 const updateCovidStatus = async (uid, covid) => {
   const updatedUser = await users.doc(uid).update({covid: covid});
@@ -153,5 +159,6 @@ module.exports = {
     checkCloseContacts, 
     addCloseContacts, 
     checkSimilarSurroudings,
-    getPhoneNumbersforCovid
+    getPhoneNumbersforCovid,
+    getCovidStatus,
 }

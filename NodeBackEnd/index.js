@@ -8,7 +8,7 @@ const config = require('./config');
 const { addUser, updateCovidStatus, 
         addCloseContacts, updateDataTable, 
         getGeoData, checkSimilarSurroudings,
-        getPhoneNumbersforCovid, } = require('./controllers/userController');
+        getPhoneNumbersforCovid, getCovidStatus } = require('./controllers/userController');
 const { calculateGeolocationData } = require('./geolocation/geolocationConversion')
 const { notifyCovid } = require('./twilioMessaging/twillioFunctions')
 
@@ -30,13 +30,24 @@ app.post('/addUser', async function(req,res) {
         let name = req.query.name;
         let covid = false;
         let phone = req.query.phone;
-        let id = req.query.id
+        let id = req.query.id;
         addUser(name, covid, phone, id);
         res.send(id);
     }
     catch(err){
         res.send('Server Error')
     }
+});
+
+app.get('/getCovid', async function(req,res) {
+  try{
+      let uid = req.query.uid;
+      let status = await getCovidStatus(uid);
+      res.send(status);
+  }
+  catch(err){
+      res.send('Server Error')
+  }
 });
 
 // app.post('/getLangLong', function(req, res) {
