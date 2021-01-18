@@ -6,7 +6,7 @@ const users = firestore1.collection('users');
 const dataTable = firestore1.collection('data');
 const tracingpingData = firestore1.collection('tracingpingData')
 const { calculateGeolocationData } = require('../geolocation/geolocationConversion')
-const twilioMessaging = require('../twilioMessaging/twillioFunctions')
+const { notifyCovid } = require('../twilioMessaging/twillioFunctions')
 
 
 /* Add new user. DONEE*/
@@ -33,6 +33,12 @@ const updateCovidStatus = async (uid, covid) => {
   const updatedUser = await users.doc(uid).update({covid: covid});
   if(covid){
     //query for all the people in the contact list and message them
+    const info = await users.doc(uid.toString()).get();
+    const contacts = info.data().contact;
+    for (let each of contacts) {
+      const person = await users.doc(each).get();
+      await notifyCovid(person.data().phone, 1);
+    }
   }
 };
 
@@ -57,7 +63,6 @@ const updateDataTable = async (uid, lat, long) => {
   catch(err){
     console.log(err)
   }
-
 };
 
 const getPhoneNumbersforCovid = async (uids) => {
